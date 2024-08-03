@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sontay Chart</title>
+    <style>
+        /* Center the chart on the page */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f7f7f7;
+        }
+
+        /* Chart container styling */
+        .chart-container {
+            width: 80%;
+            max-width: 800px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+    </style>
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="sontayChart"></canvas>
+    </div>
+
+    <script>
+        // Sontay chart data
+        const labels = [
+            '8/23/2017', '9/23/2017', '10/23/2017', '11/23/2017', '12/23/2017', 
+            '1/23/2018', '2/23/2018', '3/23/2018', '4/23/2018', '5/23/2018', 
+            '6/23/2018', '7/23/2018', '8/23/2018'
+        ];
+        
+        const data = [
+            8000, 4000, 2500, 1500, 1000, 500, 200, 300, 400, 500, 1000, 15000, 2000
+        ];
+        
+        // Chart configuration
+        const config = {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Sontay',
+                    data: data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Values'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Sontay'
+                    }
+                }
+            }
+        };
+
+        // Initialize the chart
+        const sontayChart = new Chart(
+            document.getElementById('sontayChart'),
+            config
+        );
+    </script>
+</body>
+</html>

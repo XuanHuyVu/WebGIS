@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/skel.min.js"></script>
+        <script src="js/skel-layers.min.js"></script>
+        <script src="js/init.js"></script>
+        <style>
+            .floating-menu {
+                font-family: sans-serif;
+                font-weight: bold;
+                background: transparent;
+                color: black;
+                width: 100%;
+                z-index: 50;
+                position: fixed;
+                top: 0px;
+                left: 0%;
+            }
+        </style>
+        <script>
+            function myMap() {
+                var latlng = new google.maps.LatLng(16.6,103.40);
+                var settings = {
+                    disableDefaultUI: true,
+                    scrollwheel: true,
+                    zoomControl: false,
+                    disableDoubleClickZoom: true,
+                    zoom: 6,
+                    maxZoom: 10,
+                    center: latlng,
+                    mapTypeControl: true,
+                    mapTypeControlOptions: {
+                        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                        position: google.maps.ControlPosition.BOTTOM_LEFT
+                    },
+                    navigationControl: true,
+                    navigationControlOptions: {
+                        style: google.maps.NavigationControlStyle.SMALL
+                    },
+                    mapTypeId: google.maps.MapTypeId.SATELLITE
+                };
+                map = new google.maps.Map(document.getElementById("map_canvas"),settings);
+                var icons = {
+                    frcst: {
+                        name: 'Streamflow Station',
+                        icon: './img/mf.png'
+                    },
+                    reservoir: {
+                        name: 'Reservoir',
+                        icon: './img/reservoir.png'
+                    }
+                };
+                var legend = document.createElement('div');
+                legend.innerHTML = '<h3>Legend</h3>'
+                legend.style.backgroundColor = '#fff';
+                legend.style.border = '2px solid #000';
+                legend.style.margin = '7px';
+                legend.style.padding = '7px';
+                //var legend = document.getElementById('legend');
+                for (var key in icons) {
+                    var type = icons[key];
+                    var name = type.name;
+                    var icon = type.icon;
+                    var div = document.createElement('div');
+                    div.innerHTML = '<img src="' + icon + '"> ' + name;
+                    legend.appendChild(div);
+                }
+                map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+
+                var Logo_res = new google.maps.MarkerImage('./img/reservoir.png',new google.maps.Size(29,29),new google.maps.Point(0,0),new google.maps.Point(1,1))
+                var Logo_f = new google.maps.MarkerImage('./img/mf.png',new google.maps.Size(29,29),new google.maps.Point(0,0),new google.maps.Point(1,1))
+
+                var ctaLayer = new google.maps.KmlLayer({
+                    url: 'http://depts.washington.edu/saswe/vietnam/mekong_basin.kml',
+                    suppressInfoWindows: true,
+                    preserveViewport: true,
+                    map: map
+                });
+                var ctaLayer = new google.maps.KmlLayer({
+                    url: 'http://depts.washington.edu/saswe/vietnam/mekong_red_rivers.kml',
+                    suppressInfoWindows: true,
+                    preserveViewport: true,
+                    map: map
+                });
+                var ctaLayer = new google.maps.KmlLayer({
+                    url: 'http://depts.washington.edu/saswe/vietnam/red_basin.kml',
+                    suppressInfoWindows: true,
+                    preserveViewport: true,
+                    map: map
+                });
+
+                var infowindow24 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/Laoca.html"></iframe>'
+                });
+                var companyPos24 = new google.maps.LatLng(22.486,103.976);
+                var marker24 = new google.maps.Marker({
+                    position: companyPos24,
+                    map: map,
+                    icon: Logo_f,
+                    title: "Laocai"
+                });
+                google.maps.event.addListener(marker24, 'click', function() {
+                    infowindow24.open(map, marker24);
+                });
+                var infowindow25 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/Yenba.html"></iframe>'
+                });
+                var companyPos25 = new google.maps.LatLng(21.6988,104.902);
+                var marker25 = new google.maps.Marker({
+                    position: companyPos25,
+                    map: map,
+                    icon: Logo_f,
+                    title: "Yenbai"
+                });
+                google.maps.event.addListener(marker25, 'click', function() {
+                    infowindow25.open(map, marker25);
+                });
+                var infowindow26 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/Sonta.html"></iframe>'
+                });
+                var companyPos26 = new google.maps.LatLng(21.1716,105.475);
+                var marker26 = new google.maps.Marker({
+                    position: companyPos26,
+                    map: map,
+                    icon: Logo_f,
+                    title: "Sontay"
+                });
+                google.maps.event.addListener(marker26, 'click', function() {
+                    infowindow26.open(map, marker26);
+                });
+                var infowindow27 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/Hanoi.html"></iframe>'
+                });
+                var companyPos27 = new google.maps.LatLng(20.993734,105.901663);
+                var marker27 = new google.maps.Marker({
+                    position: companyPos27,
+                    map: map,
+                    icon: Logo_f,
+                    title: "Hanoi"
+                });
+                google.maps.event.addListener(marker27, 'click', function() {
+                    infowindow27.open(map, marker27);
+                });
+                var infowindow28 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/Mdhsn.html"></iframe>'
+                });
+                var companyPos28 = new google.maps.LatLng(23.047367,103.286802);
+                var marker28 = new google.maps.Marker({
+                    position: companyPos28,
+                    map: map,
+                    icon: Logo_res,
+                    title: "Madushan Reservoir"
+                });
+                google.maps.event.addListener(marker28, 'click', function() {
+                    infowindow28.open(map, marker28);
+                });
+
+                var infowindow62 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/MK1.html"></iframe>'
+                });
+                var companyPos62 = new google.maps.LatLng(20.264,100.095);
+                var marker62 = new google.maps.Marker({
+                    position: companyPos62,
+                    map: map,
+                    icon: Logo_f,
+                    title: "Chiang Sean"
+                });
+                google.maps.event.addListener(marker62, 'click', function() {
+                    infowindow62.open(map, marker62);
+                });
+                var infowindow63 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/MK2.html"></iframe>'
+                });
+                var companyPos63 = new google.maps.LatLng(19.998,102.02);
+                var marker63 = new google.maps.Marker({
+                    position: companyPos63,
+                    map: map,
+                    icon: Logo_f,
+                    title: "Luang Prabang"
+                });
+                google.maps.event.addListener(marker63, 'click', function() {
+                    infowindow63.open(map, marker63);
+                });
+                var infowindow64 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/MK3.html"></iframe>'
+                });
+                var companyPos64 = new google.maps.LatLng(17.903,101.372);
+                var marker64 = new google.maps.Marker({
+                    position: companyPos64,
+                    map: map,
+                    icon: Logo_f,
+                    title: "Chiang Khan"
+                });
+                google.maps.event.addListener(marker64, 'click', function() {
+                    infowindow64.open(map, marker64);
+                });
+                var infowindow65 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/MK4.html"></iframe>'
+                });
+                var companyPos65 = new google.maps.LatLng(17.934,102.614);
+                var marker65 = new google.maps.Marker({
+                    position: companyPos65,
+                    map: map,
+                    icon: Logo_f,
+                    title: "Vientiane"
+                });
+                google.maps.event.addListener(marker65, 'click', function() {
+                    infowindow65.open(map, marker65);
+                });
+                var infowindow66 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/MK5.html"></iframe>'
+                });
+                var companyPos66 = new google.maps.LatLng(18.337,103.94);
+                var marker66 = new google.maps.Marker({
+                    position: companyPos66,
+                    map: map,
+                    icon: Logo_f,
+                    title: "Paksan"
+                });
+                google.maps.event.addListener(marker66, 'click', function() {
+                    infowindow66.open(map, marker66);
+                });
+                var infowindow67 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/MK6.html"></iframe>'
+                });
+                var companyPos67 = new google.maps.LatLng(17.4,104.796);
+                var marker67 = new google.maps.Marker({
+                    position: companyPos67,
+                    map: map,
+                    icon: Logo_f,
+                    title: "Nakhon Phanom"
+                });
+                google.maps.event.addListener(marker67, 'click', function() {
+                    infowindow67.open(map, marker67);
+                });
+                var infowindow68 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/MK7.html"></iframe>'
+                });
+                var companyPos68 = new google.maps.LatLng(16.563,104.733);
+                var marker68 = new google.maps.Marker({
+                    position: companyPos68,
+                    map: map,
+                    icon: Logo_f,
+                    title: "Mukdahan"
+                });
+                google.maps.event.addListener(marker68, 'click', function() {
+                    infowindow68.open(map, marker68);
+                });
+                var infowindow69 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/MK8.html"></iframe>'
+                });
+                var companyPos69 = new google.maps.LatLng(15.323,105.496);
+                var marker69 = new google.maps.Marker({
+                    position: companyPos69,
+                    map: map,
+                    icon: Logo_f,
+                    title: "Khong Chiam"
+                });
+                google.maps.event.addListener(marker69, 'click', function() {
+                    infowindow69.open(map, marker69);
+                });
+                var infowindow70 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/MK9.html"></iframe>'
+                });
+                var companyPos70 = new google.maps.LatLng(15.106,105.799);
+                var marker70 = new google.maps.Marker({
+                    position: companyPos70,
+                    map: map,
+                    icon: Logo_f,
+                    title: "Pakse"
+                });
+                google.maps.event.addListener(marker70, 'click', function() {
+                    infowindow70.open(map, marker70);
+                });
+                var infowindow71 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/SESAN.html"></iframe>'
+                });
+                var companyPos71 = new google.maps.LatLng(14.013,107.551);
+                var marker71 = new google.maps.Marker({
+                    position: companyPos71,
+                    map: map,
+                    icon: Logo_f,
+                    title: "SeSan"
+                });
+                google.maps.event.addListener(marker71, 'click', function() {
+                    infowindow71.open(map, marker71);
+                });
+                var infowindow72 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/MK10.html"></iframe>'
+                });
+                var companyPos72 = new google.maps.LatLng(13.529,105.94);
+                var marker72 = new google.maps.Marker({
+                    position: companyPos72,
+                    map: map,
+                    icon: Logo_f,
+                    title: "Stung Treng"
+                });
+                google.maps.event.addListener(marker72, 'click', function() {
+                    infowindow72.open(map, marker72);
+                });
+                var infowindow73 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/MK11.html"></iframe>'
+                });
+                var companyPos73 = new google.maps.LatLng(11.986,105.23);
+                var marker73 = new google.maps.Marker({
+                    position: companyPos73,
+                    map: map,
+                    icon: Logo_f,
+                    title: "Kampong Cham"
+                });
+                google.maps.event.addListener(marker73, 'click', function() {
+                    infowindow73.open(map, marker73);
+                });
+                var infowindow74 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/Nukng.html"></iframe>'
+                });
+                var companyPos74 = new google.maps.LatLng(14.890437,107.120643);
+                var marker74 = new google.maps.Marker({
+                    position: companyPos74,
+                    map: map,
+                    icon: Logo_res,
+                    title: "Noukong Reservoir"
+                });
+                google.maps.event.addListener(marker74, 'click', function() {
+                    infowindow74.open(map, marker74);
+                });
+                var infowindow75 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/Lwshn.html"></iframe>'
+                });
+                var companyPos75 = new google.maps.LatLng(13.548245,106.274121);
+                var marker75 = new google.maps.Marker({
+                    position: companyPos75,
+                    map: map,
+                    icon: Logo_res,
+                    title: "Lower Sesan Reservoir"
+                });
+                google.maps.event.addListener(marker75, 'click', function() {
+                    infowindow75.open(map, marker75);
+                });
+                var infowindow76 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/Xioan.html"></iframe>'
+                });
+                var companyPos76 = new google.maps.LatLng(24.704149,100.091334);
+                var marker76 = new google.maps.Marker({
+                    position: companyPos76,
+                    map: map,
+                    icon: Logo_res,
+                    title: "Xiaowan Reservoir"
+                });
+                google.maps.event.addListener(marker76, 'click', function() {
+                    infowindow76.open(map, marker76);
+                });
+                var infowindow77 = new google.maps.InfoWindow({
+                    content: '<iframe width="600" height="490" src="charts/Nuzdu.html"></iframe>'
+                });
+                var companyPos77 = new google.maps.LatLng(22.637398,100.431680);
+                var marker77 = new google.maps.Marker({
+                    position: companyPos77,
+                    map: map,
+                    icon: Logo_res,
+                    title: "Nuozhadu Reservoir"
+                });
+                google.maps.event.addListener(marker77, 'click', function() {
+                    infowindow77.open(map, marker77);
+                });
+
+            }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCW_7hFhPbZjbXmt_wuTqqkU7UagtIvG2Y&callback=myMap"></script>
+    </head>
+    <body onload="myMap()">
+        <div class="12u 12u$(3)">
+            <ul class="actions fit">
+                <li>
+                    <a href="#" onclick="window.open('http://nawapi.gov.vn')">
+                        <img src="img/nawapi.png" height="60">
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="window.open('http://www.nuce.edu.vn/en')">
+                        <img src="img/nuce.jpg" height="60">
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="window.open('http://www.usaid.gov')">
+                        <img src="img/usaid.jpg" height="60">
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="window.open('http://www.washington.edu')">
+                        <img src="img/uw.png" height="60">
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <header id="header">
+            <h1>
+                <a href="index.html">ADVANCED WATER FORECASTING SYSTEM</a>
+            </h1>
+            <nav id="nav">
+                <ul>
+                    <li>
+                        <a href="http://www.nawapi.gov.vn" class="button alt fit small">NAWAPI Home</a>
+                    </li>
+                    <li>
+                        <a href="raster.html" class="button alt fit small">Map Visualization</a>
+                    </li>
+                    <li>
+                        <a href="download.html" class="button alt fit small">Data Download</a>
+                    </li>
+                    <li>
+                        <a href="acknowledgement.html" class="button alt fit small">Acknowledgements</a>
+                    </li>
+                    <li>
+                        <a href="contactus.html" class="button alt fit small">Contact Us</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <div id="map_canvas" style="width:100%;height:800px"></div>
+        <footer id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="10u 12u$(medium)">
+                        <ul class="copyright">
+                            <li>
+                                &copy;Co-developed by <a href="#" onclick="window.open('http://www.nawapi.gov.vn')">NAWAPI</a>
+                                with Technical Assistance from <a href="#" onclick="window.open('http://www.saswe.net')">SASWE Research Group</a>
+                                and <a href="#" onclick="window.open('http://students.washington.edu/nbiswas')">Nishan Kumar Biswas</a>
+                                <br>
+                                <h5>
+                                    <font color="#858585">
+                                        <a href="#" onclick="window.open('http://www.washington.edu/')">University of Washington</a>
+                                        , <a href="#" onclick="window.open('https://www.usaid.gov/what-we-do/GlobalDevLab/international-research-science-programs/peer')">USAID-PARTNERSHIPS FOR ENHANCED ENGAGEMENT IN RESEARCH (PEER) Program</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="2u$ 12u$(medium)">
+                        <ul class="icons">
+                            <li>
+                                <a href="#" onclick="window.open('http://www.saswe.net')">
+                                    <img src="http://saswe.net/wp-content/themes/saswe/images/satellite.png" height="50" width="50">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
